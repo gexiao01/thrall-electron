@@ -1,0 +1,31 @@
+{
+  "name": "thrall-electron",
+  "version": "0.0.1",
+  "description": "",
+  "main": "main.js",
+  "scripts": {
+    "start": "node start-electron.js",
+    "pack-os": "electron-builder -m",
+    "pack-win": "electron-builder -w"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/gexiao01/thrall-electron.git"
+  },
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/gexiao01/thrall-electron/issues"
+  },
+  "homepage": "https://github.com/gexiao01/thrall-electron#readme",
+  "dependencies": {
+    "jquery": "^3.4.1",
+    "keymaster": "^1.6.2",
+    "lodash": "^4.17.15",
+    "request": "^2.88.0"
+  },
+  "devDependencies": {
+    "electron": "^6.0.0",
+    "electron-builder": "^21.2.0"
+  }
+}
