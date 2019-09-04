@@ -1,14 +1,54 @@
 const electron = require('electron');
-let url = "https://www.kkcoding.net";
-const shell = electron.shell;
-const path = require('path');
+let url = "https://www.kkcoding.net:9060";
+const autoUpdater = require('electron-updater').autoUpdater;
 let command = process.platform === 'darwin' ? 'Option+Command+I' : 'Ctrl+Shift+I';
 
 let mainWindow;
 let app = electron.app;
+let ipcMain = electron.ipcMain;
 let globalShortcut = electron.globalShortcut;
 let BrowserWindow = electron.BrowserWindow;
+let appUrl = 'https://www.kkcoding.net:9060/dist/build/';
 
+function updateHandler() {
+    let message = {
+        error: '检查更新出错',
+        checking: '正在检查更新……',
+        updateAva: '检测到新版本，正在下载……',
+        updateNotAva: '现在使用的就是最新版本，不用更新'
+    }
+    const os = require('os');
+    autoUpdater.setFeedURL(appUrl);
+    autoUpdater.on("error", function (error) {
+        sendUpdateMessage(message.error);
+    });
+    autoUpdater.on('checking-for-update', function () {
+        sendUpdateMessage(message.checking);
+    });
+    autoUpdater.on('update-available',function (info) {
+        sendUpdateMessage(message.updateAva);
+    });
+    autoUpdater.on('update-not-available', function (info) {
+        sendUpdateMessage(message.updateNotAva);
+    });
+
+    autoUpdater.on('download-progress', function (progressObj) {
+        mainWindow.webContents.send('downloadProgress', progressObj);
+    });
+
+    autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate,updateUrl, quitAndUpdate) {
+        ipcMain.on('isUpdateNow', (e,arg) => {
+            console.log('开始更新');
+            console.log(arguments);
+            autoUpdater.quitAndInstall();
+        });
+        mainWindow.webContents.send('isUpdateNow');
+    });
+}
+
+function sendUpdateMessage(text){
+    mainWindow.webContents.send('message', text);
+}
 function createWindow(){
     let width = electron.screen.getPrimaryDisplay().workAreaSize.width;
     let height = electron.screen.getPrimaryDisplay().workAreaSize.height;
@@ -30,11 +70,10 @@ function createWindow(){
     mainWindow.on('closed', function () {
         mainWindow = null;
     });
+    updateHandler();
     globalShortcut.register(command,()=>{
-        shell.openItem(path.join(__dirname, 'package.json'));
         mainWindow.webContents.openDevTools();
     })
-
 }
 
 app.on('ready', createWindow);

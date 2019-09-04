@@ -18,7 +18,22 @@
     "url": "https://github.com/gexiao01/thrall-electron/issues"
   },
   "homepage": "https://github.com/gexiao01/thrall-electron#readme",
+  "build": {
+    "appId": "com.thrall.electron",
+    "copyright": "快快编程",
+    "productName": "thrall-electron",
+    "publish": [
+      {
+        "provider": "generic",
+        "url": "https://www.kkcoding.net:9060/dist/build/"
+      }
+    ],
+    "mac": {
+      "icon": "img/favicon.png"
+    }
+  },
   "dependencies": {
+    "electron-updater": "^4.1.2",
     "jquery": "^3.4.1",
     "keymaster": "^1.6.2",
     "lodash": "^4.17.15",
