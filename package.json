@@ -20,8 +20,14 @@
   "homepage": "https://github.com/gexiao01/thrall-electron#readme",
   "build": {
     "appId": "com.thrall.electron",
-    "copyright": "快快编程",
+    "copyright": "thrall",
     "productName": "thrall-electron",
+    "nsis": {
+      "oneClick": false,
+      "allowElevation": true,
+      "allowToChangeInstallationDirectory": true,
+      "shortcutName": "快快编程"
+    },
     "publish": [
       {
         "provider": "generic",
@@ -30,6 +36,15 @@
     ],
     "mac": {
       "icon": "img/favicon.png"
+    },
+    "win": {
+      "icon": "img/favicon.png",
+      "target": [
+        {
+          "target": "nsis",
+          "arch": ["ia32"]
+        }
+      ]
     }
   },
   "dependencies": {
