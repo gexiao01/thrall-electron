@@ -1,5 +1,4 @@
 const electron = require('electron');
-let url = "https://www.kkcoding.net:9060";
 const autoUpdater = require('electron-updater').autoUpdater;
 let command = process.platform === 'darwin' ? 'Option+Command+I' : 'Ctrl+Shift+I';
 
@@ -8,7 +7,7 @@ let app = electron.app;
 let ipcMain = electron.ipcMain;
 let globalShortcut = electron.globalShortcut;
 let BrowserWindow = electron.BrowserWindow;
-let appUrl = 'https://www.kkcoding.net:9060/dist/build/';
+let appUrl = 'https://172.20.10.10:9060/download/';
 
 function updateHandler() {
     let message = {
@@ -20,12 +19,15 @@ function updateHandler() {
     const os = require('os');
     autoUpdater.setFeedURL(appUrl);
     autoUpdater.on("error", function (error) {
+        console.log(error);
         sendUpdateMessage(message.error);
     });
     autoUpdater.on('checking-for-update', function () {
+        console.log(message);
         sendUpdateMessage(message.checking);
     });
     autoUpdater.on('update-available',function (info) {
+        console.log(message);
         sendUpdateMessage(message.updateAva);
     });
     autoUpdater.on('update-not-available', function (info) {
@@ -38,8 +40,8 @@ function updateHandler() {
 
     autoUpdater.on('update-downloaded', function (event, releaseNotes, releaseName, releaseDate,updateUrl, quitAndUpdate) {
         ipcMain.on('isUpdateNow', (e,arg) => {
-            console.log('开始更新');
             console.log(arguments);
+            console.log('开始更新');
             autoUpdater.quitAndInstall();
         });
         mainWindow.webContents.send('isUpdateNow');
@@ -65,7 +67,7 @@ function createWindow(){
     });
 
     mainWindow.maximize();
-    mainWindow.loadURL(url);
+    mainWindow.loadURL(`file://${__dirname}/index.html`);
 
     mainWindow.on('closed', function () {
         mainWindow = null;
