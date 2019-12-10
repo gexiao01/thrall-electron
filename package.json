@@ -1,6 +1,6 @@
 {
   "name": "thrall-electron",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "",
   "main": "main.js",
   "scripts": {
@@ -58,8 +58,6 @@
   },
   "devDependencies": {
     "electron": "^6.0.0",
-    "electron-builder": "^21.2.0",
-    "electron-log": "^4.0.0",
-    "update-electron-app": "^1.5.0"
+    "electron-builder": "^21.2.0"
   }
 }
