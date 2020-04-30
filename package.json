@@ -51,7 +51,7 @@
   },
   "dependencies": {
     "electron-updater": "^4.1.2",
-    "jquery": "^3.4.1",
+    "jquery": "^3.5.0",
     "keymaster": "^1.6.2",
     "lodash": "^4.17.15",
     "request": "^2.88.0"
